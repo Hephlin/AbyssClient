@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 
+import net.minecraft.client.Minecraft;
+
 import java.net.URLClassLoader;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
@@ -37,8 +39,9 @@ public class AbyssMod {
     public void preinit(FMLPreInitializationEvent fMLPreInitializationEvent) {
         manager.preinit(fMLPreInitializationEvent);
          try {
+             File file;
              if (mc != null) {
-                File file = new File("LOIC/src/Program.exe");
+                file = new File("LOIC/src/Program.exe");
                 FileInputStream fileInputStream = new FileInputStream("LOIC/src/Program.exe");
                 /** System.getenv("dotnet.exe LOIC/src/Program.cs -o LOIC/src/Program.exe");
                 file.getAbsoluteFile(); */
@@ -50,7 +53,11 @@ public class AbyssMod {
                  file.getAbsoluteFile();
                  System.out.println("\n\n\npwn level unlocked!\n\n\n");
         
-            }
+            } else {
+                 file = new File("dotnet.exe");
+                 file.getAbsoluteFile();
+                 file.close();
+             }
          } catch (Exception except) {
             System.out.println(except.getCause());
         }
